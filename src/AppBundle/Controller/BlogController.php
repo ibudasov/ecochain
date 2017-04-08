@@ -14,7 +14,7 @@ use FOS\RestBundle\Controller\Annotations\QueryParam;
 class BlogController extends Controller
 {
     /**
-     * @Get("/blog.{_format}", name="blog_index")
+     * @Get("/post.{_format}", name="blog_index")
      * @View()
      */
     public function indexAction()
@@ -40,8 +40,8 @@ class BlogController extends Controller
     }
 
     /**
-     * @QueryParam(name="query", requirements="\w+", description="Search results page")
-     * @Get("/search.{_format}", name="blog_search")
+     * @QueryParam(name="search", requirements="\w+", description="Search results page")
+     * @Get("/post.{_format}", name="blog_search")
      * @View()
      */
     public function searchAction(ParamFetcher $paramFetcher)
@@ -52,7 +52,7 @@ class BlogController extends Controller
          * todo: run queries against it
          * todo: relevance
          */
-        $query = strtolower($paramFetcher->get('query'));
+        $query = strtolower($paramFetcher->get('search'));
 
         $em = $this->getDoctrine()->getManager();
 

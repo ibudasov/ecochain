@@ -10,7 +10,7 @@ class DefaultControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/blog.json');
+        $crawler = $client->request('GET', '/post.json');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
@@ -28,7 +28,7 @@ class DefaultControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/blog.html');
+        $crawler = $client->request('GET', '/post.html');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
@@ -37,7 +37,7 @@ class DefaultControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/search.html?query=and');
+        $crawler = $client->request('GET', '/post.html?query=and');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
@@ -47,7 +47,7 @@ class DefaultControllerTest extends WebTestCase
         $client = static::createClient();
 
         $query = 'and';
-        $crawler = $client->request('GET', '/search.json?query=' . $query);
+        $crawler = $client->request('GET', '/post.json?search=' . $query);
 
         $data = json_decode($client->getResponse()->getContent(), true);
 
