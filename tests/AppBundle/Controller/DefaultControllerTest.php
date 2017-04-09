@@ -14,18 +14,22 @@ class DefaultControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/post');
+        $crawler = $client->request('GET', '/post.json');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $this->checkIfJson($client);
     }
 
     public function testICanGetOnePost()
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/post/1');
+        $crawler = $client->request('GET', '/post/1.json');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $this->checkIfJson($client);
     }
 
     public function testICanFindAPost()
@@ -37,9 +41,8 @@ class DefaultControllerTest extends WebTestCase
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
-        $data = json_decode($client->getResponse()->getContent(), true);
+        $data = $this->checkIfJson($client);
 
-        $this->assertNotEmpty($data);
         $firstPost = current($data['posts']);
         $this->assertArrayHasKey('title', $firstPost);
         $this->assertArrayHasKey('body', $firstPost);
@@ -56,11 +59,8 @@ class DefaultControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $content = $client->getResponse()->getContent();
-        $this->assertTrue(is_int(stripos($content, '<html>')));
+        $this->checkIfHtml($client);
     }
-
-
 
     public function testBlog()
     {
@@ -70,8 +70,7 @@ class DefaultControllerTest extends WebTestCase
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
-        $content = $client->getResponse()->getContent();
-        $this->assertTrue(is_int(stripos($content, '<html>')));
+        $this->checkIfHtml($client);
     }
 
     public function testSearchHtml()
@@ -81,8 +80,21 @@ class DefaultControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/search.html?query=and');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->checkIfHtml($client);
+    }
+
+    private function checkIfJson($client): array
+    {
+        $data = json_decode($client->getResponse()->getContent(), true);
+        $this->assertNotEmpty($data);
+        return $data;
+    }
+
+    private function checkIfHtml($client): string
+    {
         $content = $client->getResponse()->getContent();
         $this->assertTrue(is_int(stripos($content, '<html>')));
+        return $content;
     }
 
 }

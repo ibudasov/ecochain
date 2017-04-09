@@ -14,7 +14,7 @@ class BlogController extends Controller
 {
     /**
      * @Get("/blog.{_format}", name="front_blog")
-     * @Get("/post", name="api_get_post")
+     * @Get("/post.{_format}", name="api_get_post")
      * @View()
      */
     public function indexAction(): array
@@ -25,7 +25,7 @@ class BlogController extends Controller
     }
 
     /**
-     * @Get("/post/{id}", name="api_get_post_id", requirements={"id": "\d+"}))
+     * @Get("/post/{id}.{_format}", name="api_get_post_id", requirements={"id": "\d+"}))
      * @Get("/read/{id}.{_format}", name="front_post", requirements={"id": "\d+"})
      * @View()
      */
