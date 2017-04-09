@@ -2,6 +2,10 @@
 
 namespace AppBundle\Repository;
 
+use Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\Paginator;
+
 class PostRepository extends \Doctrine\ORM\EntityRepository
 {
     /**
@@ -10,20 +14,21 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
      * todo: run queries against it
      * todo: relevance
      */
-    public function getSearchResults(string $query): array
+    public function getPaginatedSearchResults(string $query, Paginator $paginator, int $page): PaginationInterface
     {
-        return $this->getEntityManager()
+        $query = $this->getEntityManager()
             ->createQueryBuilder()
             ->select('p')
             ->from('AppBundle:Post', 'p')
             ->where('p.title LIKE :query')
             ->orWhere('p.body LIKE :query')
             ->setParameter('query', '%' . $query . '%')
-            ->getQuery()
-            ->getResult();
+            ->getQuery();
+
+        return $paginator->paginate($query, $page, 1);
     }
 
-    public function getPaginated($paginator, $page = 1)
+    public function getPaginated(Paginator $paginator, int $page): PaginationInterface
     {
         $em = $this->getEntityManager();
         $dql = "SELECT p FROM AppBundle:Post p";

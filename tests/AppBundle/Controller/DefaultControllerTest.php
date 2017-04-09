@@ -48,7 +48,7 @@ class DefaultControllerTest extends WebTestCase
 
         $data = $this->checkIfJson($client);
 
-        $firstPost = current($data['posts']);
+        $firstPost = current($data['posts']['items']);
         $this->assertArrayHasKey('title', $firstPost);
         $this->assertArrayHasKey('body', $firstPost);
     }

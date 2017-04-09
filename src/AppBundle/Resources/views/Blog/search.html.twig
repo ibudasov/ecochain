@@ -11,4 +11,9 @@
         <p>{{ p.body }}</p>
     {% endfor %}
 
+    <div class="navigation">
+        {{ knp_pagination_render(posts) }}
+    </div>
+
+
 {% endblock %}

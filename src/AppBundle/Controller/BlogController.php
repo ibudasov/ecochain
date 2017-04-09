@@ -20,7 +20,7 @@ class BlogController extends Controller
     public function indexAction(Request $request): array
     {
         return [
-            'posts' => $this->getDoctrine()->getRepository('AppBundle:Post')->getPaginated(
+            'posts' => $this->getRepo()->getPaginated(
                 $this->get('knp_paginator'),
                 $request->query->getInt('page', 1)
             )
@@ -35,12 +35,13 @@ class BlogController extends Controller
     public function viewAction(int $id): array
     {
         return [
-            'post' => $this->getDoctrine()->getRepository('AppBundle:Post')->find($id)
+            'post' => $this->getRepo()->find($id)
         ];
     }
 
     /**
      * @QueryParam(name="query", requirements="\w+", description="Search query string")
+     * @QueryParam(name="page", requirements="\d+", description="Page number", default="1")
      * @Get("/search.{_format}", name="front_search", defaults={"_format" = "html"})
      * @Get("/post/search.{_format}", name="api_post_search", defaults={"_format" = "json"})
      * @View()
@@ -48,10 +49,20 @@ class BlogController extends Controller
     public function searchAction(ParamFetcher $paramFetcher): array
     {
         $query = $paramFetcher->get('query');
+        $page = $paramFetcher->get('page');
 
         return [
-            'posts' => $this->getDoctrine()->getRepository('AppBundle:Post')->getSearchResults($query),
+            'posts' => $this->getRepo()->getPaginatedSearchResults(
+                $query,
+                $this->get('knp_paginator'),
+                $page
+            ),
             'query' => $query
         ];
+    }
+
+    private function getRepo(): PostRepository
+    {
+        return $this->getDoctrine()->getRepository('AppBundle:Post');
     }
 }
