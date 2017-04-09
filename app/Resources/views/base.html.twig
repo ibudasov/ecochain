@@ -25,15 +25,15 @@
             aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand" href="/">Ecochain</a>
+    <a class="navbar-brand" href="{{ path('root')}}">Ecochain</a>
 
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{{ path('root')}}">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/blog">Blog</a>
+                <a class="nav-link" href="{{ path('front_blog', {'_format': 'html'})}}">Blog</a>
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">

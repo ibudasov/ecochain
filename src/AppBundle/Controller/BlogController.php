@@ -12,42 +12,34 @@ use FOS\RestBundle\Controller\Annotations\QueryParam;
 
 class BlogController extends Controller
 {
-    /** @var PostRepository postRepository */
-    private $postRepository;
-
-    public function __construct()
-    {
-        $this->postRepository = $this->getDoctrine()->getRepository('AppBundle:Post');
-    }
-
     /**
+     * @Get("/blog.{_format}", name="front_blog")
      * @Get("/post.{_format}", name="api_get_post")
-     * @Get("/blog", name="front_blog")
      * @View()
      */
     public function indexAction(): array
     {
         return [
-            'posts' => $this->postRepository->findAll()
+            'posts' => $this->getDoctrine()->getRepository('AppBundle:Post')->findAll()
         ];
     }
 
     /**
      * @Get("/post/{id}.{_format}", name="api_get_post_id")
-     * @Get("/read/{id}", name="front_post")
+     * @Get("/read/{id}.{_format}", name="front_post")
      * @View()
      */
     public function viewAction(int $id): array
     {
         return [
-            'post' => $this->postRepository->find($id)
+            'post' => $this->getDoctrine()->getRepository('AppBundle:Post')->find($id)
         ];
     }
 
     /**
      * @QueryParam(name="search", requirements="\w+", description="Search results page")
      * @Get("/post.{_format}", name="api_post_search")
-     * @Get("/search", name="front_search")
+     * @Get("/search.{_format}", name="front_search")
      * @View()
      */
     public function searchAction(ParamFetcher $paramFetcher): array
@@ -55,7 +47,7 @@ class BlogController extends Controller
         $query = $paramFetcher->get('search');
 
         return [
-            'posts' => $this->postRepository->getSearchResults($query),
+            'posts' => $this->getDoctrine()->getRepository('AppBundle:Post')->getSearchResults($query),
             'query' => $query
         ];
     }

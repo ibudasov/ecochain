@@ -8,10 +8,10 @@
         <h2>
             {{ p.title }} — {{ p.datetimeCreated|date("F jS Y") }}
         </h2>
-        <p>{{ p.body }}</p>
+        <p>{{ p.body[:100] ~ '...' }}</p>
 
 
-        <p><a class="btn btn-secondary" href="{{ path('front_post', {'id': p.id}) }}" role="button">Read more »</a></p>
+        <p><a class="btn btn-secondary" href="{{ path('front_post', {'id': p.id, '_format': 'html'}) }}" role="button">Read more »</a></p>
     {% endfor %}
 
 {% endblock %}

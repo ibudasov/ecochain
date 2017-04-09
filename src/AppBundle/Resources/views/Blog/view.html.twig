@@ -8,5 +8,5 @@
     </h1>
     <p>{{ post.body }}</p>
 
-    <p><a class="btn btn-secondary" href="{{ path('front_blog')}}" role="button">Ga back</a></p>
+    <p><a class="btn btn-secondary" href="{{ path('front_blog', {'_format': 'html'})}}" role="button">Go back</a></p>
 {% endblock %}

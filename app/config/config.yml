@@ -78,7 +78,7 @@ fos_rest:
     format_listener:
         enabled: true
         rules:
-            - { path: '^/', priorities: ['json', 'html'], fallback_format: 'html', prefer_extension: true}
+            - { path: '^/', priorities: ['html', 'json'], fallback_format: 'json'}
     versioning: true
     view:
         empty_content: 204
