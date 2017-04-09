@@ -1,1 +1,14 @@
-search results page
+{% extends 'base.html.twig' %}
+
+{% block title %}Search — {{ query }}{% endblock %}
+
+{% block body %}
+
+    {% for p in posts %}
+        <h2>
+            {{ p.title }} — {{ p.datetimeCreated|date("F jS Y") }}
+        </h2>
+        <p>{{ p.body }}</p>
+    {% endfor %}
+
+{% endblock %}

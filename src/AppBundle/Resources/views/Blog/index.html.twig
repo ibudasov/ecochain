@@ -1,1 +1,17 @@
-main blog page
+{% extends 'base.html.twig' %}
+
+{% block title %}Blog{% endblock %}
+
+{% block body %}
+
+    {% for p in posts %}
+        <h2>
+            {{ p.title }} — {{ p.datetimeCreated|date("F jS Y") }}
+        </h2>
+        <p>{{ p.body }}</p>
+
+
+        <p><a class="btn btn-secondary" href="{{ path('front_post', {'id': p.id}) }}" role="button">Read more »</a></p>
+    {% endfor %}
+
+{% endblock %}

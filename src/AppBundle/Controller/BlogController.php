@@ -2,8 +2,7 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Post;
-use Doctrine\ORM\EntityRepository;
+use AppBundle\Repository\PostRepository;
 use FOS\RestBundle\Request\ParamFetcher;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,56 +12,51 @@ use FOS\RestBundle\Controller\Annotations\QueryParam;
 
 class BlogController extends Controller
 {
-    /**
-     * @Get("/post.{_format}", name="blog_index")
-     * @View()
-     */
-    public function indexAction()
-    {
-        $posts = $this->getDoctrine()
-            ->getRepository('AppBundle:Post')
-            ->findAll();
+    /** @var PostRepository postRepository */
+    private $postRepository;
 
-        return $posts;
+    public function __construct()
+    {
+        $this->postRepository = $this->getDoctrine()->getRepository('AppBundle:Post');
     }
 
     /**
-     * @Get("/post/{id}.{_format}", name="blog_post")
+     * @Get("/post.{_format}", name="api_get_post")
+     * @Get("/blog", name="front_blog")
      * @View()
      */
-    public function postAction(int $id)
+    public function indexAction(): array
     {
-        $post = $this->getDoctrine()
-            ->getRepository('AppBundle:Post')
-            ->find($id);
+        return [
+            'posts' => $this->postRepository->findAll()
+        ];
+    }
 
-        return $post;
+    /**
+     * @Get("/post/{id}.{_format}", name="api_get_post_id")
+     * @Get("/read/{id}", name="front_post")
+     * @View()
+     */
+    public function viewAction(int $id): array
+    {
+        return [
+            'post' => $this->postRepository->find($id)
+        ];
     }
 
     /**
      * @QueryParam(name="search", requirements="\w+", description="Search results page")
-     * @Get("/post.{_format}", name="blog_search")
+     * @Get("/post.{_format}", name="api_post_search")
+     * @Get("/search", name="front_search")
      * @View()
      */
-    public function searchAction(ParamFetcher $paramFetcher)
+    public function searchAction(ParamFetcher $paramFetcher): array
     {
-        /**
-         * in order to have proper search results:
-         * todo: create an index, with transformed data
-         * todo: run queries against it
-         * todo: relevance
-         */
-        $query = strtolower($paramFetcher->get('search'));
+        $query = $paramFetcher->get('search');
 
-        $em = $this->getDoctrine()->getManager();
-
-        $posts = $em->getRepository("AppBundle:Post")->createQueryBuilder('p')
-            ->where('p.title LIKE :query')
-            ->andWhere('p.body LIKE :query')
-            ->setParameter('query', '%' . $query . '%')
-            ->getQuery()
-            ->getResult();
-
-        return $posts;
+        return [
+            'posts' => $this->postRepository->getSearchResults($query),
+            'query' => $query
+        ];
     }
 }

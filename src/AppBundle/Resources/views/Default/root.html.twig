@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+        <div class="container">
+            <h1 class="display-3">Hello, Ecochain!</h1>
+            <p>This is my simplistic blog</p>
+            <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more »</a></p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <h2>What's been used? </h2>
+            <p>
+            <ul>
+                <li>Symfony 3.2 + REST bundle, which helped me to have the same code for serving API and front-end
+                    part
+                </li>
+                <li>Database (MySQL) has been deployed on AWS</li>
+            </ul>
+            </p>
+            <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Used approach</h2>
+            <p>
+            <ul>
+                <li>BDD with standard Symfony crawler, which helped me write integrational tests with</li>
+                <li>PHP Unit and cover both API and Frontend parts</li>
+            </ul>
+            </p>
+            <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>What to improve</h2>
+            <p>
+            <ul>
+                <li>shorten post preview</li>
+                <li>url helper</li>
+                <li>Live search</li>
+                <li>Pagination</li>
+
+                <li>config for env</li>
+                <li>Search algorithm could be better, you can find some todos in the source code.</li>
+                <li>Pack everything to docker</li>
+                <li>Security</li>
+                <li>API docs</li>
+                <li>Pictures?</li>
+                <li>readme how to deploy</li>
+            </ul>
+            </p>
+            <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+        </div>
+    </div>
+
+
+{% endblock %}
