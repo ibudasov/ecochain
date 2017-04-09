@@ -14,7 +14,7 @@ class BlogController extends Controller
 {
     /**
      * @Get("/blog.{_format}", name="front_blog")
-     * @Get("/post.{_format}", name="api_get_post")
+     * @Get("/post", name="api_get_post")
      * @View()
      */
     public function indexAction(): array
@@ -25,8 +25,8 @@ class BlogController extends Controller
     }
 
     /**
-     * @Get("/post/{id}.{_format}", name="api_get_post_id")
-     * @Get("/read/{id}.{_format}", name="front_post")
+     * @Get("/post/{id}", name="api_get_post_id", requirements={"id": "\d+"}))
+     * @Get("/read/{id}.{_format}", name="front_post", requirements={"id": "\d+"})
      * @View()
      */
     public function viewAction(int $id): array
@@ -37,14 +37,14 @@ class BlogController extends Controller
     }
 
     /**
-     * @QueryParam(name="search", requirements="\w+", description="Search results page")
-     * @Get("/post.{_format}", name="api_post_search")
+     * @QueryParam(name="query", requirements="\w+", description="Search query string")
+     * @Get("/post/search.{_format}", name="api_post_search", defaults={"_format": "json"})
      * @Get("/search.{_format}", name="front_search")
      * @View()
      */
     public function searchAction(ParamFetcher $paramFetcher): array
     {
-        $query = $paramFetcher->get('search');
+        $query = $paramFetcher->get('query');
 
         return [
             'posts' => $this->getDoctrine()->getRepository('AppBundle:Post')->getSearchResults($query),

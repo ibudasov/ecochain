@@ -13,9 +13,11 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
     public function getSearchResults(string $query): array
     {
         return $this->getEntityManager()
-            ->createQueryBuilder('p')
+            ->createQueryBuilder()
+            ->select('p')
+            ->from('AppBundle:Post', 'p')
             ->where('p.title LIKE :query')
-            ->andWhere('p.body LIKE :query')
+            ->orWhere('p.body LIKE :query')
             ->setParameter('query', '%' . $query . '%')
             ->getQuery()
             ->getResult();

@@ -6,6 +6,49 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class DefaultControllerTest extends WebTestCase
 {
+    #######################################################################
+    #                           API
+    #######################################################################
+
+    public function testICanGetAllThePosts()
+    {
+        $client = static::createClient();
+
+        $crawler = $client->request('GET', '/post');
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    }
+
+    public function testICanGetOnePost()
+    {
+        $client = static::createClient();
+
+        $crawler = $client->request('GET', '/post/1');
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    }
+
+    public function testICanFindAPost()
+    {
+        $client = static::createClient();
+
+        $query = 'and';
+        $crawler = $client->request('GET', '/post/search.json?query=' . $query);
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $data = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertNotEmpty($data);
+        $firstPost = current($data['posts']);
+        $this->assertArrayHasKey('title', $firstPost);
+        $this->assertArrayHasKey('body', $firstPost);
+    }
+
+    #######################################################################
+    #                           FRONT
+    #######################################################################
+
     public function testMainPage()
     {
         $client = static::createClient();
@@ -15,29 +58,13 @@ class DefaultControllerTest extends WebTestCase
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 
-    public function testBlogJson()
+
+
+    public function testBlog()
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/post.json');
-
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-    }
-
-    public function testPostJson()
-    {
-        $client = static::createClient();
-
-        $crawler = $client->request('GET', '/post/1.json');
-
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-    }
-
-    public function testBlogHtml()
-    {
-        $client = static::createClient();
-
-        $crawler = $client->request('GET', '/post.html');
+        $crawler = $client->request('GET', '/blog.html');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
@@ -46,25 +73,9 @@ class DefaultControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/post.html?query=and');
+        $crawler = $client->request('GET', '/search.html?query=and');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 
-    public function testSearch()
-    {
-        $client = static::createClient();
-
-        $query = 'and';
-        $crawler = $client->request('GET', '/post.json?search=' . $query);
-
-        $data = json_decode($client->getResponse()->getContent(), true);
-
-        $this->assertNotEmpty($data);
-        $firstPost = current($data);
-
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertArrayHasKey('title', $firstPost);
-        $this->assertArrayHasKey('body', $firstPost);
-    }
 }

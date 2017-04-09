@@ -78,7 +78,7 @@ fos_rest:
     format_listener:
         enabled: true
         rules:
-            - { path: '^/', priorities: ['html', 'json'], fallback_format: 'json'}
+            - { path: '^/', priorities: ['json', 'html'], fallback_format: 'json'}
     versioning: true
     view:
         empty_content: 204
@@ -92,3 +92,13 @@ fos_rest:
         failed_validation: HTTP_BAD_REQUEST
         default_engine: twig
         view_response_listener: 'force'
+knp_paginator:
+    page_range: 5                      # default page range used in pagination control
+    default_options:
+        page_name: page                # page query parameter name
+        sort_field_name: sort          # sort field query parameter name
+        sort_direction_name: direction # sort direction query parameter name
+        distinct: true                 # ensure distinct results, useful when ORM queries are using GROUP BY statements
+    template:
+        pagination: 'KnpPaginatorBundle:Pagination:sliding.html.twig'     # sliding pagination controls template
+        sortable: 'KnpPaginatorBundle:Pagination:sortable_link.html.twig' # sort link template
