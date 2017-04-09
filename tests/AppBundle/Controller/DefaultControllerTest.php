@@ -4,6 +4,11 @@ namespace Tests\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @link: http://symfony.com/doc/current/routing.html#book-routing-conditions
+ * @link: http://symfony.com/doc/current/bundles/FOSRestBundle/7-manual-route-definition.html
+ * @link: https://github.com/KnpLabs/KnpPaginatorBundle
+ */
 class DefaultControllerTest extends WebTestCase
 {
     #######################################################################

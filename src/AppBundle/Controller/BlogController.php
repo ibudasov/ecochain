@@ -13,20 +13,23 @@ use FOS\RestBundle\Controller\Annotations\QueryParam;
 class BlogController extends Controller
 {
     /**
-     * @Get("/blog.{_format}", name="front_blog")
-     * @Get("/post.{_format}", name="api_get_post")
+     * @Get("/blog.{_format}", name="front_blog", defaults={"_format" = "html"})
+     * @Get("/post.{_format}", name="api_get_post", defaults={"_format" = "json"})
      * @View()
      */
-    public function indexAction(): array
+    public function indexAction(Request $request): array
     {
         return [
-            'posts' => $this->getDoctrine()->getRepository('AppBundle:Post')->findAll()
+            'posts' => $this->getDoctrine()->getRepository('AppBundle:Post')->getPaginated(
+                $this->get('knp_paginator'),
+                $request->query->getInt('page', 1)
+            )
         ];
     }
 
     /**
-     * @Get("/post/{id}.{_format}", name="api_get_post_id", requirements={"id": "\d+"}))
-     * @Get("/read/{id}.{_format}", name="front_post", requirements={"id": "\d+"})
+     * @Get("/read/{id}.{_format}", name="front_post", requirements={"id": "\d+"}, defaults={"_format" = "html"})
+     * @Get("/post/{id}.{_format}", name="api_get_post_id", requirements={"id": "\d+"}, defaults={"_format" = "json"}))
      * @View()
      */
     public function viewAction(int $id): array
@@ -38,8 +41,8 @@ class BlogController extends Controller
 
     /**
      * @QueryParam(name="query", requirements="\w+", description="Search query string")
-     * @Get("/post/search.{_format}", name="api_post_search")
-     * @Get("/search.{_format}", name="front_search")
+     * @Get("/search.{_format}", name="front_search", defaults={"_format" = "html"})
+     * @Get("/post/search.{_format}", name="api_post_search", defaults={"_format" = "json"})
      * @View()
      */
     public function searchAction(ParamFetcher $paramFetcher): array

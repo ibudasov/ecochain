@@ -22,4 +22,13 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getPaginated($paginator, $page = 1)
+    {
+        $em = $this->getEntityManager();
+        $dql = "SELECT p FROM AppBundle:Post p";
+        $query = $em->createQuery($dql);
+
+        return $paginator->paginate($query, $page, 1);
+    }
 }
