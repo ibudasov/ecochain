@@ -56,6 +56,8 @@ class DefaultControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $content = $client->getResponse()->getContent();
+        $this->assertTrue(is_int(stripos($content, '<html>')));
     }
 
 
@@ -67,6 +69,9 @@ class DefaultControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/blog.html');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $content = $client->getResponse()->getContent();
+        $this->assertTrue(is_int(stripos($content, '<html>')));
     }
 
     public function testSearchHtml()
@@ -76,6 +81,8 @@ class DefaultControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/search.html?query=and');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $content = $client->getResponse()->getContent();
+        $this->assertTrue(is_int(stripos($content, '<html>')));
     }
 
 }

@@ -38,7 +38,7 @@ class BlogController extends Controller
 
     /**
      * @QueryParam(name="query", requirements="\w+", description="Search query string")
-     * @Get("/post/search.{_format}", name="api_post_search", defaults={"_format": "json"})
+     * @Get("/post/search.{_format}", name="api_post_search")
      * @Get("/search.{_format}", name="front_search")
      * @View()
      */
