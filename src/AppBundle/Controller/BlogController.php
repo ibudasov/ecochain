@@ -61,6 +61,21 @@ class BlogController extends Controller
         ];
     }
 
+    /**
+     * @QueryParam(name="query", requirements="\w+", description="Search query string")
+     * @Get("/post/liveSearch.{_format}", name="api_post_live_search", defaults={"_format" = "json"})
+     * @View()
+     */
+    public function liveSearchAction(ParamFetcher $paramFetcher): array
+    {
+        $query = $paramFetcher->get('query');
+
+        return [
+            'posts' => $this->getRepo()->getLiveSearchResults($query),
+            'query' => $query
+        ];
+    }
+
     private function getRepo(): PostRepository
     {
         return $this->getDoctrine()->getRepository('AppBundle:Post');
