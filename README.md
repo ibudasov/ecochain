@@ -1,4 +1,31 @@
-ecochain
-========
+# Ecochain
 
-A Symfony project created on April 7, 2017, 3:47 pm.
+This is a php frontend, which provides 
+
+- simplistic blog interface
+- API 
+- search feature
+- covered by integrational tests
+
+# Install
+
+- git pull https://github.com/ibudasov/ecochain.git
+- composer install
+- bin/console server:run
+- @link: http://localhost:8000
+
+# Tests
+
+- phpunit
+
+# Further improvements
+
+- Live search
+- 2 columns
+
+- config for env
+- Search algorithm could be better, you can find some todos in the source code.
+- Pack everything to docker
+- Security
+- API docs
+- Pictures?
