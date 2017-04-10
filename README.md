@@ -12,6 +12,7 @@ This is a php frontend, which provides
 - git pull https://github.com/ibudasov/ecochain.git
 - composer install
 - bin/console server:run
+- bin/console assets:install
 - @link: http://localhost:8000
 
 # Tests
