@@ -21,9 +21,6 @@ This is a php frontend, which provides
 
 # Further improvements
 
-- Live search
-- 2 columns
-
 - config for env
 - Search algorithm could be better, you can find some todos in the source code.
 - Pack everything to docker

@@ -3,7 +3,6 @@ $(document).ready(function () {
 
         console.log($('#search-input').val());
         // link: http://api.jquery.com/jquery.ajax/
-        $('#search-results').empty();
         $.get("/post/liveSearch.json?query=" + $('#search-input').val()).success(function (result) {
 
             $('#search-results').append('<ul>');
@@ -14,6 +13,8 @@ $(document).ready(function () {
 
         }).fail(function () {
             console.log('Sorry, this does not work');
+        }).before(function () {
+            $('#search-results').empty();
         });
     });
 });
