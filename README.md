@@ -28,9 +28,7 @@ This is a php frontend, which provides
 
 # Further improvements
 
-- config for env
 - Search algorithm could be better, you can find some todos in the source code.
-- Pack everything to docker
 - Security
 - API docs
 - Pictures?
