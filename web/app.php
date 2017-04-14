@@ -1,5 +1,5 @@
 <?php
-die('it works');
+
 use Symfony\Component\HttpFoundation\Request;
 
 /** @var \Composer\Autoload\ClassLoader $loader */

@@ -15,6 +15,13 @@ This is a php frontend, which provides
 - bin/console assets:install
 - @link: http://localhost:8000
 
+# Install with Docker
+
+- docker build -t ecochain .
+- docker container run --name ecochain -e SYMFONY_ENV="dev" -d -p 80:8000 ecochain
+- docker inspect ecochain # if you don't know your Docker IP
+- @link: http://123.23.45.56
+
 # Tests
 
 - phpunit
