@@ -34,9 +34,12 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ path('front_blog', {'_format': 'html'})}}">Blog</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/api/doc">Docs</a>
+            </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input id="search-input" class="form-control mr-sm-2" type="text" placeholder="Search">
+        <form class="form-inline my-2 my-lg-0" action="{{ path('front_search', {'_format': 'html'})}}" method="get">
+            <input id="search-input" name="query" class="form-control mr-sm-2" type="text" placeholder="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
     </div>

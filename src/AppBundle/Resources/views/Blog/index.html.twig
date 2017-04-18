@@ -7,8 +7,9 @@
 
     {% for p in posts %}
         <h2>
-            {{ p.title }} — {{ p.datetimeCreated|date("F jS Y") }}
+            {{ p.title }}
         </h2>
+        <p><i> — {{ p.datetimeCreated|date("F jS Y") }}</i></p>
         <p>{{ p.body[:100] ~ '...' }}</p>
 
 

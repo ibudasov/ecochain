@@ -8,6 +8,9 @@ use Knp\Component\Pager\Paginator;
 
 class PostRepository extends \Doctrine\ORM\EntityRepository
 {
+    // todo: move to params
+    const POSTS_PER_PAGE = 3;
+
     public function getLiveSearchResults(string $query): array
     {
         $dql = $this->getEntityManager()
@@ -17,7 +20,7 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
             ->where('p.title LIKE :query')
             ->orWhere('p.body LIKE :query')
             ->setParameter('query', '%' . $query . '%')
-            ->setMaxResults(5) // we don't need more that 5 results
+            ->setMaxResults(self::POSTS_PER_PAGE)
             ->getQuery();
 
         return $dql->getResult();
@@ -40,7 +43,7 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('query', '%' . $query . '%')
             ->getQuery();
 
-        return $paginator->paginate($query, $page, 1);
+        return $paginator->paginate($query, $page, self::POSTS_PER_PAGE);
     }
 
     public function getPaginated(Paginator $paginator, int $page): PaginationInterface
@@ -49,6 +52,6 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
         $dql = "SELECT p FROM AppBundle:Post p";
         $query = $em->createQuery($dql);
 
-        return $paginator->paginate($query, $page, 1);
+        return $paginator->paginate($query, $page, self::POSTS_PER_PAGE);
     }
 }
